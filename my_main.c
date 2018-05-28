@@ -287,14 +287,8 @@ void my_main() {
   clear_screen( t );
   clear_zbuffer(zb);
 
-  //printf("First pass\n");
   first_pass();
-  //printf("yay\n");
   struct vary_node ** knobs = second_pass();
-
-  //check num_frames
-  //num_frames = 1 -> process_knobs
-  //num_Frames > 1 -> op_array frames times
 
   int frame;
   for(frame=0; frame < num_frames; frame++){
@@ -415,16 +409,19 @@ void my_main() {
 	  xval = op[i].op.move.d[0];
 	  yval = op[i].op.move.d[1];
 	  zval = op[i].op.move.d[2];
-	  printf("Move: %6.2f %6.2f %6.2f",
-		 xval, yval, zval);
+	  
 	  if (op[i].op.move.p != NULL)
 	    {
-	      printf("\tknob: %s",op[i].op.move.p->name);
+	      printf("\tknob: %s ",op[i].op.move.p->name);
 	      //printf("\nmove: %0.2f\n",lookup_symbol(op[i].op.move.p->name)->s.value);
 	      xval *= lookup_symbol(op[i].op.move.p->name)->s.value;
 	      yval *= lookup_symbol(op[i].op.move.p->name)->s.value;
 	      zval *= lookup_symbol(op[i].op.move.p->name)->s.value;
 	    }
+
+	  printf("Move: %6.2f %6.2f %6.2f",
+	  	 xval, yval, zval);
+	  
 	  tmp = make_translate( xval, yval, zval );
 	  matrix_mult(peek(systems), tmp);
 	  copy_matrix(tmp, peek(systems));
@@ -434,16 +431,19 @@ void my_main() {
 	  xval = op[i].op.scale.d[0];
 	  yval = op[i].op.scale.d[1];
 	  zval = op[i].op.scale.d[2];
-	  printf("Scale: %6.2f %6.2f %6.2f",
-		 xval, yval, zval);
+	  
 	  if (op[i].op.scale.p != NULL)
 	    {
-	      printf("\tknob: %s",op[i].op.scale.p->name);
+	      printf("\tknob: %s ",op[i].op.scale.p->name);
 	      //printf("\nscale: %0.2f\n",lookup_symbol(op[i].op.scale.p->name)->s.value);
 	      xval *= lookup_symbol(op[i].op.scale.p->name)->s.value;
 	      yval *= lookup_symbol(op[i].op.scale.p->name)->s.value;
 	      zval *= lookup_symbol(op[i].op.scale.p->name)->s.value;
 	    }
+
+	  printf("Scale: %6.2f %6.2f %6.2f",
+	  	 xval, yval, zval);
+	  
 	  tmp = make_scale( xval, yval, zval );
 	  matrix_mult(peek(systems), tmp);
 	  copy_matrix(tmp, peek(systems));
@@ -452,15 +452,19 @@ void my_main() {
 	case ROTATE:
 	  xval = op[i].op.rotate.axis;
 	  theta = op[i].op.rotate.degrees;
-	  printf("Rotate: axis: %6.2f degrees: %6.2f",
-		 xval, theta);
+	  //printf("Rotate: axis: %6.2f degrees: %6.2f",
+	  //	 xval, theta);
 	  if (op[i].op.rotate.p != NULL)
 	    {
-	      printf("\tknob: %s",op[i].op.rotate.p->name);
+	      printf("\tknob: %s ",op[i].op.rotate.p->name);
 	      //printf("\nangle: %0.2f\n",lookup_symbol(op[i].op.rotate.p->name)->s.value);
 	      theta *= lookup_symbol(op[i].op.rotate.p->name)->s.value;
 	      
 	    }
+
+	  printf("Rotate: axis: %6.2f degrees: %6.2f",
+	  	 xval, theta);
+	  
 	  theta*= (M_PI / 180);
 	  if (op[i].op.rotate.axis == 0 )
 	    tmp = make_rotX( theta );
@@ -501,9 +505,9 @@ void my_main() {
     strcpy(filename,"anim/");
     strcat(filename,name);
     strcat(filename,s);
-    printf("%s\n",filename);	     
+    //printf("%s\n",filename);	     
     save_extension(t,filename);
-    printf("\n");
+    printf("\n\n");
   }
 
   if(num_frames)
