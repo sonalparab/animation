@@ -1,0 +1,12 @@
+basename bouncy_ball
+frames 40
+push
+move 250 75 0
+move 0 200 0 bouncy
+rotate x 360 spinny
+rotate y 360 spinny
+sphere 0 0 0 75
+vary bouncy 0 14 0 1
+vary bouncy 15 39 1 0
+vary spinny 0 14 0 .5
+vary spinny 15 39 .5 1
